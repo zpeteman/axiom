@@ -1,7 +1,7 @@
 use colored::*;
 use std::io::{self, Write};
-use crate::ai::ask_ai;
-use crate::utils::slow_print_color;
+use crate::utils::{slow_print_color, clear_screen};
+use crate::fractals::{draw_random_fractal, draw_fractal_variant};
 
 pub async fn run_cli(sentence_color: Color) {
     loop {
@@ -17,13 +17,15 @@ pub async fn run_cli(sentence_color: Color) {
                 slow_print_color("Farewell, traveler of thought...", sentence_color, 30);
                 break;
             }
-            "help" => slow_print_color("commands: help, exit, ai <prompt>", sentence_color, 12),
-            cmd if cmd.starts_with("ai ") => {
-                let query = cmd.strip_prefix("ai ").unwrap();
-                match ask_ai(query).await {
-                    Ok(resp) => slow_print_color(&resp, sentence_color, 12),
-                    Err(_) => slow_print_color("⚠️ failed to reach the oracle.", Color::Red, 12),
-                }
+            "help" => slow_print_color(
+                "commands: help, exit, clear, fractal [-mandel | -tree | -noise]",
+                sentence_color,
+                12,
+            ),
+            "clear" | "cls" => clear_screen(),
+            cmd if cmd.starts_with("fractal") => {
+                let arg = cmd.split_whitespace().nth(1);
+                draw_fractal_variant(arg, sentence_color);
             }
             _ => slow_print_color("unknown command — whisper 'help' to the void.", sentence_color, 12),
         }

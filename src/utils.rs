@@ -1,4 +1,4 @@
-use std::{thread::sleep, time::Duration};
+use std::{thread::sleep, time::Duration, process::Command};
 use colored::*;
 
 pub fn slow_print_color(text: &str, color: Color, delay: u64) {
@@ -8,4 +8,12 @@ pub fn slow_print_color(text: &str, color: Color, delay: u64) {
         sleep(Duration::from_millis(delay));
     }
     println!();
+}
+
+pub fn clear_screen() {
+    if cfg!(target_os = "windows") {
+        Command::new("cmd").args(["/C", "cls"]).status().unwrap();
+    } else {
+        Command::new("clear").status().unwrap();
+    }
 }
