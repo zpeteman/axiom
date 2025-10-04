@@ -1,15 +1,27 @@
 mod cli;
-mod ai;
+mod fractals;
 mod art;
 mod utils;
-mod fractals;
+mod ai;
 
-use art::intro;
-use cli::run_cli;
-use colored::Color;
+use cli::Cli;
+use clap::Parser;
+use utils::clear_terminal;
 
-#[tokio::main]
-async fn main() {
-    let sentence_color: Color = intro().await;
-    run_cli(sentence_color).await;
+fn main() {
+    let args = Cli::parse();
+
+    if args.clear {
+        clear_terminal();
+        return;
+    }
+
+    match args.mode.as_deref() {
+        Some("fractal") => fractals::show_fractal(args.animate),
+        Some("art") => art::show_art(args.animate),
+        _ => {
+            println!("Welcome to Axiom!");
+            println!("Use --help to explore available modes.");
+        }
+    }
 }
