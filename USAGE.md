@@ -1,47 +1,15 @@
-# Usage
+# Axiom Commands
 
-## Getting Started
+This page provides a quick reference for the available commands in Axiom.
 
-### Prerequisites
+## General
 
-- [Rust](https://www.rust-lang.org/tools/install)
+- `axiom --help`: Shows all available commands and options.
+- `axiom --clear`: Clears the terminal screen.
 
-### Building
+## Modes
 
-```bash
-cargo build --release
-```
-
-### Running
-
-To see the available options, run:
-
-```bash
-./target/release/axiom --help
-```
-
-To display a fractal:
-
-```bash
-./target/release/axiom --mode fractal
-```
-
-To display a fractal with animation:
-
-```bash
-./target/release/axiom --mode fractal --animate
-```
-
-To display ASCII art:
-
-```bash
-./target/release/axiom --mode art
-```
-
-## Running Tests
-
-To run the tests, use the following command:
-
-```bash
-cargo test
-```
+- `axiom --mode fractal`: Displays a fractal.
+  - `--animate`: Animates the fractal.
+- `axiom --mode art`: Displays ASCII art.
+  - `--animate`: Animates the ASCII art.
